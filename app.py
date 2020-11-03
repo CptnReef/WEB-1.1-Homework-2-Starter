@@ -21,6 +21,8 @@ def choose_froyo():
     <form action="/froyo_results" method="GET">
         What is your favorite Fro-Yo flavor? <br/>
         <input type="text" name="flavor"><br/>
+        <br/>What is your favorite toppings on your Fro-Yo?<br/>
+        <input type="text" name="toppings"><br/>
         <input type="submit" value="Submit!">
     </form>
     """
@@ -30,28 +32,49 @@ def choose_froyo():
 def show_froyo_results():
     """Shows the user what they ordered from the previous page."""
     users_froyo_flavor = request.args.get('flavor')
-    return f'You ordered {users_froyo_flavor} flavored Fro-Yo!'
+    users_froyo_toppings = request.args.get('toppings')
+    return f'You ordered {users_froyo_flavor} flavored Fro-Yo' + f' with toppings {users_froyo_toppings}!'
 
 @app.route('/favorites')
 def favorites():
     """Shows the user a form to choose their favorite color, animal, and city."""
-    pass
+    return """
+    <form action="/favorites_results" method="GET">
+    Favorite Color?
+    <input type="text" name="color"><br/>
+    Favorite Animal?
+    <input type="text" name="animal"><br/>
+    Favorite City?
+    <input type="text" name="city"><br/>
+    <br/><input type="submit" value="Submit">
+    </form>
+    """
 
 @app.route('/favorites_results')
 def favorites_results():
     """Shows the user a nice message using their form results."""
-    pass
+    users_favorite_color = request.args.get('color')
+    users_favorite_animal = request.args.get('animal')
+    users_favorite_city = request.args.get('city')
+    return f'Your ideal home is themed in {users_favorite_color} color,' + f' with many curious {users_favorite_animal} pets,' + f' located in the heart {users_favorite_city} city!'
 
 @app.route('/secret_message')
 def secret_message():
     """Shows the user a form to collect a secret message. Sends the result via
     the POST method to keep it a secret!"""
-    pass
+    return """
+    <form action="/message_results" method="POST">
+    Secret Message?
+    <input type="text" name="message"><br/>
+    <br/><input type="submit" value="Submit">
+    </form>
+    """
 
 @app.route('/message_results', methods=['POST'])
 def message_results():
     """Shows the user their message, with the letters in sorted order."""
-    pass
+    users_message = request.form.get('message')
+    return f"Here's your secret message!" + f"<br/> Right Here: {sort_letters(users_message)}"
 
 @app.route('/calculator')
 def calculator():
@@ -61,7 +84,7 @@ def calculator():
         Please enter 2 numbers and select an operator.<br/><br/>
         <input type="number" name="operand1">
         <select name="operation">
-            <option value="add">+</option>
+            <option value="add name="add">+</option>
             <option value="subtract">-</option>
             <option value="multiply">*</option>
             <option value="divide">/</option>
@@ -74,7 +97,24 @@ def calculator():
 @app.route('/calculator_results')
 def calculator_results():
     """Shows the user the result of their calculation."""
-    pass
+    operator = request.args.get('operation')
+    users_num1 = request.args.get('operand1')
+    users_num2 = request.args.get('operand2')
+    if request.args.get('add') == True == operator:
+        add = int(users_num1) + int(users_num2)
+        return f'You chose to add {users_num1} and {users_num2}. Your result is {add}'
+    elif request.args.get('subtract') == True:
+        subtract = int(users_num1) - int(users_num2)
+        return f'You chose to subtract {users_num1} and {users_num2}. Your result is {subtract}'
+    elif request.args.get('multiply') == True:
+        multiply = int(users_num1) * int(users_num2)
+        return f'You chose to {users_num1} and {users_num2}. Your result is {multiply}'
+    elif request.args.get('divide') == True:
+        divide = int(users_num1) / int(users_num2)
+        return f'You chose to divide {users_num1} and {users_num2}. Your result is {divide}'
+    else:
+        return f'Invalid inputs: {users_num1} and {users_num2}. Please try again by entering 2 numbers!'
+
 
 
 # List of compliments to be used in the `compliments_results` route (feel free 
