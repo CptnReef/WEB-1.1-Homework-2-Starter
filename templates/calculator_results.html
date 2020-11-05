@@ -5,8 +5,17 @@
     </head>
     <body>
         <!-- Your HTML code goes here! -->
-
-
+        {% if users_result == 'add' %}
+            You chose to add {{num1}} and {{num2}}. Your result is: {{result}}
+        {% elif users_result == 'subtract' %}
+            You chose to subtract {{num1}} and {{num2}}. Your result is: {{result}}
+        {% elif users_result == 'multiply' %}
+            You chose to multiply {{num1}} and {{num2}}. Your result is: {{result}}
+        {% elif users_result == 'divide' %}
+            You chose to divide {{num1}} and {{num2}}. Your result is: {{result}}
+        {% else %}
+            Your result is Invalid.
+        {% endif %}
 
 
 

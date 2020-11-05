@@ -80,11 +80,11 @@ def message_results():
 def calculator():
     """Shows the user a form to enter 2 numbers and an operation."""
     return """
-    <form action="/calculator_results" method="GET">
+    <form action="/calculator_results" method="POST">
         Please enter 2 numbers and select an operator.<br/><br/>
         <input type="number" name="operand1">
         <select name="operation">
-            <option value="add name="add">+</option>
+            <option value="add">+</option>
             <option value="subtract">-</option>
             <option value="multiply">*</option>
             <option value="divide">/</option>
@@ -94,26 +94,32 @@ def calculator():
     </form>
     """
 
-@app.route('/calculator_results')
+@app.route('/calculator_results', methods=['POST'])
 def calculator_results():
     """Shows the user the result of their calculation."""
-    operator = request.args.get('operation')
-    users_num1 = request.args.get('operand1')
-    users_num2 = request.args.get('operand2')
-    if request.args.get('add') == True == operator:
-        add = int(users_num1) + int(users_num2)
-        return f'You chose to add {users_num1} and {users_num2}. Your result is {add}'
-    elif request.args.get('subtract') == True:
-        subtract = int(users_num1) - int(users_num2)
-        return f'You chose to subtract {users_num1} and {users_num2}. Your result is {subtract}'
-    elif request.args.get('multiply') == True:
-        multiply = int(users_num1) * int(users_num2)
-        return f'You chose to {users_num1} and {users_num2}. Your result is {multiply}'
-    elif request.args.get('divide') == True:
-        divide = int(users_num1) / int(users_num2)
-        return f'You chose to divide {users_num1} and {users_num2}. Your result is {divide}'
-    else:
-        return f'Invalid inputs: {users_num1} and {users_num2}. Please try again by entering 2 numbers!'
+
+    num1 = int(request.form.get('operand1'))
+    num2 = int(request.form.get('operand2'))
+    users_result = request.form.get('operation')
+        
+    operators = {
+        'add' : num1+num2,
+        'subtract' : num1-num2,
+        'multiply' : num1*num2,
+        'divide' : num1/num2
+    }
+
+    result = operators[users_result]
+    
+    context = {
+        'result' : result,
+        'num1' : num1,
+        'num2' : num2,
+        'operators' : operators,
+        'users_result' : users_result
+    }
+
+    return render_template('calculator_results.html', **context)
 
 
 
@@ -162,4 +168,4 @@ def compliments_results():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
