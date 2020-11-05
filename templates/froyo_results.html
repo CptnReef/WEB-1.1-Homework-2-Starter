@@ -5,11 +5,14 @@
     </head>
     <body>
         <!-- Your HTML code goes here! -->
-
-
-
-
-
-        
+        {% if users_froyo_flavor and users_froyo_toppings %}
+            You ordered {{users_froyo_flavor}} flavored Fro-Yo with toppings {{users_froyo_toppings}}!
+        {% elif users_froyo_flavor %}
+            You ordered {{users_froyo_flavor}} flavored Fro-Yo without toppings?
+        {% elif users_froyo_toppings %}
+            Snack Bars over there Pal~!
+        {% else %}
+            . . .! No Fro-Yo for you?
+        {% endif %}        
     </body>
 </html>
