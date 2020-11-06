@@ -6,13 +6,13 @@
     <body>
         <!-- Your HTML code goes here! -->
         {% if users_result == 'add' %}
-            You chose to add {{num1}} and {{num2}}. Your result is: {{result}}
+            You chose to add {{num1}} and {{num2}}. Your result is: {{num1 + num2}}
         {% elif users_result == 'subtract' %}
-            You chose to subtract {{num1}} and {{num2}}. Your result is: {{result}}
+            You chose to subtract {{num1}} and {{num2}}. Your result is: {{num1 - num2}}
         {% elif users_result == 'multiply' %}
-            You chose to multiply {{num1}} and {{num2}}. Your result is: {{result}}
+            You chose to multiply {{num1}} and {{num2}}. Your result is: {{num1 * num2}}
         {% elif users_result == 'divide' %}
-            You chose to divide {{num1}} and {{num2}}. Your result is: {{result}}
+            You chose to divide {{num1}} and {{num2}}. Your result is: {{num1 / num2}}
         {% else %}
             Your result is Invalid.
         {% endif %}        

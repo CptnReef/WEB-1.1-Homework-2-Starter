@@ -76,44 +76,16 @@ def message_results():
 @app.route('/calculator')
 def calculator():
     """Shows the user a form to enter 2 numbers and an operation."""
-    return """
-    <form action="/calculator_results" method="POST">
-        Please enter 2 numbers and select an operator.<br/><br/>
-        <input type="number" name="operand1">
-        <select name="operation">
-            <option value="add">+</option>
-            <option value="subtract">-</option>
-            <option value="multiply">*</option>
-            <option value="divide">/</option>
-        </select>
-        <input type="number" name="operand2">
-        <input type="submit" value="Submit!">
-    </form>
-    """
+    return render_template('calculator_form.html')
 
 @app.route('/calculator_results', methods=['POST'])
 def calculator_results():
     """Shows the user the result of their calculation."""
-
-    num1 = int(request.form.get('operand1'))
-    num2 = int(request.form.get('operand2'))
-    users_result = request.form.get('operation')
-        
-    operators = {
-        'add' : num1+num2,
-        'subtract' : num1-num2,
-        'multiply' : num1*num2,
-        'divide' : num1/num2
-    }
-
-    result = operators[users_result]
-    
+       
     context = {
-        'result' : result,
-        'num1' : num1,
-        'num2' : num2,
-        'operators' : operators,
-        'users_result' : users_result
+        'num1' : int(request.form.get('operand1')),
+        'num2' : int(request.form.get('operand2')),
+        'users_result' : request.form.get('operation')
     }
 
     return render_template('calculator_results.html', **context)
