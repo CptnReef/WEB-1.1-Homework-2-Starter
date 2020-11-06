@@ -17,26 +17,15 @@ def homepage():
 @app.route('/froyo')
 def choose_froyo():
     """Shows a form to collect the user's Fro-Yo order."""
-    return """
-    <form action="/froyo_results" method="POST">
-        What is your favorite Fro-Yo flavor? <br/>
-        <input type="text" name="flavor"><br/>
-        <br/>What is your favorite toppings on your Fro-Yo?<br/>
-        <input type="text" name="toppings"><br/>
-        <input type="submit" value="Submit!">
-    </form>
-    """
-
+    return render_template('froyo_form.html')
 
 @app.route('/froyo_results', methods=['POST'])
 def show_froyo_results():
     """Shows the user what they ordered from the previous page."""
-    users_froyo_flavor = request.form.get('flavor'),
-    users_froyo_toppings = request.form.get('toppings')
 
     context = {
-    'users_froyo_flavor':users_froyo_flavor,
-    'users_froyo_toppings':users_froyo_toppings
+    'users_froyo_flavor':request.form.get('flavor'),
+    'users_froyo_toppings':request.form.get('toppings')
     }
 
     return render_template('froyo_results.html', **context)
