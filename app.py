@@ -126,11 +126,16 @@ def compliments():
     """Shows the user a form to get compliments."""
     return render_template('compliments_form.html')
 
-@app.route('/compliments_results')
+@app.route('/compliments_results', methods=['POST'])
 def compliments_results():
     """Show the user some compliments."""
+    num = request.form.get('num_compliments')
+    compliments = request.form.get('wants_compliments')
     context = {
         # TODO: Enter your context variables here.
+        'name' : request.form.get('users_name'),
+        'compliments' :bool(compliments),
+        'list_of_compliments' :  random.sample(list_of_compliments,k=int(num))
     }
 
     return render_template('compliments_results.html', **context)

@@ -6,9 +6,13 @@
     <body>
         <!-- Your HTML code goes here! -->
 
-        
-
-        
+        {% if name and compliments == 'no' %}
+            Hi {{name}}!           
+        {% elif name and compliments %}
+            Hello {{name}}! You are {{list_of_compliments}}!
+        {% else %}
+            Bye?
+        {% endif %}
         
     </body>
 </html>
